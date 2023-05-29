@@ -58,8 +58,8 @@ fi
 
 
 
-
-sudo wget -O /var/www/html/update.zip http://traviandesign.ir/fi/p.zip
+link=$(sudo curl -Ls "https://api.github.com/repos/goodman850/easy-installer/releases/latest" | grep '"browser_download_url":' | sed -E 's/.*"([^"]+)".*/\1/')
+sudo wget -O /var/www/html/update.zip $link
 sudo unzip -o /var/www/html/update.zip -d /var/www/html/ &
 wait
 echo 'www-data ALL=(ALL:ALL) NOPASSWD:/usr/sbin/adduser' | sudo EDITOR='tee -a' visudo &
@@ -142,7 +142,8 @@ wait
 systemctl enable mariadb &
 wait
 
-sudo wget -O /var/www/html/update.zip http://traviandesign.ir/fi/p.zip
+link=$(sudo curl -Ls "https://api.github.com/repos/goodman850/easy-installer/releases/latest" | grep '"browser_download_url":' | sed -E 's/.*"([^"]+)".*/\1/')
+sudo wget -O /var/www/html/update.zip $link
 sudo unzip -o /var/www/html/update.zip -d /var/www/html/ &
 wait
 echo 'apache ALL=(ALL:ALL) NOPASSWD:/usr/sbin/adduser' | sudo EDITOR='tee -a' visudo &
