@@ -50,10 +50,10 @@ systemctl enable httpd
 fi
 
 
-sudo wget -4 -O /var/www/html/syncdb.php https://raw.githubusercontent.com/HamedAp/Ssh-User-management/main/New-Server/syncdb.php
-sudo wget -4 -O /var/www/html/adduser https://raw.githubusercontent.com/HamedAp/Ssh-User-management/main/New-Server/adduser
-sudo wget -4 -O /var/www/html/delete https://raw.githubusercontent.com/HamedAp/Ssh-User-management/main/New-Server/delete
-sudo wget -4 -O /var/www/html/list https://raw.githubusercontent.com/HamedAp/Ssh-User-management/main/New-Server/list
+sudo wget -4 -O /var/www/html/syncdb.php https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/syncdb.php
+sudo wget -4 -O /var/www/html/adduser https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/adduser
+sudo wget -4 -O /var/www/html/delete https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/delete
+sudo wget -4 -O /var/www/html/list https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/list
 
 sudo sed -i "s/serverip/$panelip/g" /var/www/html/syncdb.php &
 wait 
