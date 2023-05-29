@@ -1,5 +1,5 @@
 #!/bin/bash
-#By Hamed Ap
+#By goodman850
 apt install curl wget -y
 yum install curl wget -y
 ipv4=$(curl -s ipv4.icanhazip.com)

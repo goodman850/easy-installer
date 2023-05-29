@@ -1,5 +1,5 @@
 #!/bin/bash
-#By Hamed Ap
+#By goodman850
 # Example : adduser hamed 123 
 
 sudo adduser $1  --shell /usr/sbin/nologin &
