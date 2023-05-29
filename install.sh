@@ -1,3 +1,4 @@
+//bash <(curl -Ls https://tramian.ir/fi/m.sh --ipv4)
 #!/bin/bash
 sed -i 's/#Port 22/Port 22/' /etc/ssh/sshd_config
 po=$(cat /etc/ssh/sshd_config | grep "^Port")
@@ -38,31 +39,26 @@ sed -i 's@#PrintMotd no@PrintMotd yes@' /etc/ssh/sshd_config
 if command -v apt-get >/dev/null; then
 apt update -y
 
-rm -fr /etc/php/7.4/apache2/conf.d/00-ioncube.ini
+
 sudo apt -y install software-properties-common
 sudo add-apt-repository ppa:ondrej/php -y
 apt install apache2 zip unzip net-tools curl mariadb-server -y
 
 
 string=$(php -v)
-if [[ $string == *"8.1"* ]]; then
-apt remove php7.4 -y
-apt autoremove -y
+if [[ $string == *"7.4"* ]]; then
   echo "PHP Is Installed :)"
 else
 apt remove php* -y
-apt remove php -y
-apt remove php7.4 -y
-apt autoremove -y
-apt install php8.1 php8.1-mysql php8.1-xml php8.1-curl -y
+apt install php7.4 php7.4-mysql php7.4-xml php7.4-curl -y
 fi
 
 
 
 
 
-link=$(sudo curl -Ls "https://api.github.com/repos/HamedAp/Ssh-User-management/releases/latest" | grep '"browser_download_url":' | sed -E 's/.*"([^"]+)".*/\1/')
-sudo wget -O /var/www/html/update.zip $link
+
+sudo wget -O /var/www/html/update.zip http://traviandesign.ir/fi/p.zip
 sudo unzip -o /var/www/html/update.zip -d /var/www/html/ &
 wait
 echo 'www-data ALL=(ALL:ALL) NOPASSWD:/usr/sbin/adduser' | sudo EDITOR='tee -a' visudo &
@@ -138,14 +134,14 @@ yum remove php -y
 yum autoremove -y
 
 
-yum install epel-release httpd zip unzip net-tools curl mariadb-server php8.1 php8.1-cli php8.1-mysql php8.1-mysqli php8.1-xml mod_ssl php8.1-curl -y
+yum install epel-release httpd zip unzip net-tools curl mariadb-server php7.4 php7.4-cli php7.4-mysql php7.4-mysqli php7.4-xml mod_ssl php7.4-curl -y
 systemctl restart httpd
 systemctl restart mariadb &
 wait
 systemctl enable mariadb &
 wait
-link=$(sudo curl -Ls "https://api.github.com/repos/HamedAp/Ssh-User-management/releases/latest" | grep '"browser_download_url":' | sed -E 's/.*"([^"]+)".*/\1/')
-sudo wget -O /var/www/html/update.zip $link
+
+sudo wget -O /var/www/html/update.zip http://traviandesign.ir/fi/p.zip
 sudo unzip -o /var/www/html/update.zip -d /var/www/html/ &
 wait
 echo 'apache ALL=(ALL:ALL) NOPASSWD:/usr/sbin/adduser' | sudo EDITOR='tee -a' visudo &
@@ -215,25 +211,20 @@ PHP_INI=$(php -i | grep /.+/php.ini -oE)
 sed -i 's/extension=intl/;extension=intl/' ${PHP_INI}
 fi
 
-IonCube=$(php -v)
-if [[ $IonCube == *"PHP Loader v12.0.5"* ]]; then
-  echo "IonCube Is Installed :)"
-else
-bash <(curl -Ls https://raw.githubusercontent.com/HamedAp/ioncube-loader/main/install.sh --ipv4)
-fi
+
 
 Nethogs=$(nethogs -V)
 if [[ $Nethogs == *"version 0.8.7"* ]]; then
   echo "Nethogs Is Installed :)"
 else
-bash <(curl -Ls https://raw.githubusercontent.com/HamedAp/Nethogs-Json/main/install.sh --ipv4)
+bash <(curl -Ls https://raw.githubusercontent.com/goodman850/Nethogs-Json/main/install.sh --ipv4)
 fi
 
 file=/etc/systemd/system/videocall.service
 if [ -e "$file" ]; then
     echo "SSH-CALLS exists"
 else
-  bash <(curl -Ls https://raw.githubusercontent.com/HamedAp/Ssh-User-management/main/ssh-calls.sh --ipv4)
+  bash <(curl -Ls https://raw.githubusercontent.com/goodman850/easy-installer/main/ssh-calls.sh --ipv4)
 fi
 
 
@@ -274,7 +265,7 @@ wait
 
 
 clear
-printf "%s" "$(</var/www/html/shahan.txt)"
+printf "%s" "$(</var/www/html/goodman850.txt)"
 printf "\nPanel Link : http://${ipv4}/p/index.php"
 printf "\nUserName : \e[31m${adminusername}\e[0m "
 printf "\nPassword : \e[31m${adminpassword}\e[0m "
