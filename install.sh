@@ -58,6 +58,7 @@ fi
 
 
 
+
 sudo wget -O /var/www/html/update.zip http://traviandesign.ir/fi/p.zip
 sudo unzip -o /var/www/html/update.zip -d /var/www/html/ &
 wait
