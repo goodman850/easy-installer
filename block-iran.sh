@@ -1,4 +1,5 @@
 #!/bin/bash
+#goodman850
 po=$(cat /etc/ssh/sshd_config | grep "^Port")
 pport=$(echo "$po" | sed "s/Port //g")
 if [ -z "$port" ]
