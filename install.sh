@@ -3,8 +3,8 @@
 sed -i 's/#Port 22/Port 22/' /etc/ssh/sshd_config
 po=$(cat /etc/ssh/sshd_config | grep "^Port")
 port=$(echo "$po" | sed "s/Port //g")
-adminuser=$(mysql -N -e "use ShaHaN; select adminuser from setting where id='1';")
-adminpass=$(mysql -N -e "use ShaHaN; select adminpassword from setting where id='1';")
+adminuser=$(mysql -N -e "use TurboS; select adminuser from setting where id='1';")
+adminpass=$(mysql -N -e "use TurboS; select adminpassword from setting where id='1';")
 clear
 if [ "$adminuser" != "" ]; then
 adminusername=$adminuser
@@ -230,7 +230,7 @@ else
 fi
 
 
-mysql -e "create database ShaHaN;" &
+mysql -e "create database TurboS;" &
 wait
 mysql -e "CREATE USER '${adminusername}'@'localhost' IDENTIFIED BY '${adminpassword}';" &
 wait
@@ -267,7 +267,7 @@ wait
 
 
 clear
-printf "%s" "$(</var/www/html/goodman850.txt)"
+printf "%s" "$(</var/www/html/TurboS.txt)"
 printf "\nPanel Link : http://${ipv4}/p/index.php"
 printf "\nUserName : \e[31m${adminusername}\e[0m "
 printf "\nPassword : \e[31m${adminpassword}\e[0m "
