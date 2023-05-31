@@ -67,8 +67,8 @@ sudo wget -4 -O /var/www/html/syncdb.php https://raw.githubusercontent.com/goodm
 sudo wget -4 -O /var/www/html/adduser https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/adduser
 sudo wget -4 -O /var/www/html/delete https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/delete
 sudo wget -4 -O /var/www/html/list https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/list
-sudo mkdir /var/www/html/p/
-sudo mkdir /var/www/html/p/log/
+sudo mkdir /var/www/html/p
+sudo mkdir /var/www/html/p/log
 sudo sed -i "s/serverip/$panelip/g" /var/www/html/syncdb.php &
 wait 
 sudo sed -i "s/servertoken/$token/g" /var/www/html/syncdb.php &
