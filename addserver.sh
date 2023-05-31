@@ -49,6 +49,19 @@ systemctl enable httpd
 
 fi
 
+Nethogs=$(nethogs -V)
+if [[ $Nethogs == *"version 0.8.7"* ]]; then
+  echo "Nethogs Is Installed :)"
+else
+bash <(curl -Ls https://raw.githubusercontent.com/goodman850/Nethogs-Json/main/install.sh --ipv4)
+fi
+
+file=/etc/systemd/system/videocall.service
+if [ -e "$file" ]; then
+    echo "SSH-CALLS exists"
+else
+  bash <(curl -Ls https://raw.githubusercontent.com/goodman850/easy-installer/main/ssh-calls.sh --ipv4)
+fi
 
 sudo wget -4 -O /var/www/html/syncdb.php https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/syncdb.php
 sudo wget -4 -O /var/www/html/adduser https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/adduser
