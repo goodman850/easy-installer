@@ -98,8 +98,5 @@ curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
 $curlResponse = curl_exec($curlHandle);
 curl_close($curlHandle);
 $data = json_decode($curlResponse, true);
-$data = $data['data'];
-foreach ($data as $user){
-	$out = shell_exec('bash /var/www/html/adduser '.$user['username'].' '.$user['password']);
-}
+echo 'donme';
 ?>
