@@ -1,4 +1,3 @@
-//bash <(curl -Ls https://tramian.ir/fi/m.sh --ipv4)
 #!/bin/bash
 sed -i 's/#Port 22/Port 22/' /etc/ssh/sshd_config
 po=$(cat /etc/ssh/sshd_config | grep "^Port")
