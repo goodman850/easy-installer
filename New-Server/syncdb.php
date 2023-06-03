@@ -3,15 +3,11 @@ date_default_timezone_set("Asia/Tehran");
 $ip = "serverip";
 $token = "servertoken";
 
+
+include "config.php";
 $output = shell_exec('cat /etc/passwd | grep "/home/" | grep -v "/home/syslog"');
 $userlist = preg_split("/\r\n|\n|\r/", $output);
-foreach($userlist as $user){
-$userarray = explode(":",$user);
-if (!empty($userarray[0])) {
- $out = shell_exec('bash /var/www/html/delete '.$userarray[0]);
- echo $userarray[0] . " Removed  <br>";
-}}
-include "config.php";
+
 $pid = shell_exec("pgrep nethogs");
 $pid = preg_replace("/\\s+/", "", $pid);
 if (is_numeric($pid)) {
@@ -69,6 +65,7 @@ if (is_numeric($pid)) {
         }
     }
     $oout= json_encode($newarray);
+//var_dump($userlist);
 } else {
     unlink("/var/www/html/p/log/out.json");
     $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
@@ -85,8 +82,25 @@ $curlResponse = curl_exec($curlHandle);
 curl_close($curlHandle);
 $data = json_decode($curlResponse, true);
 $data = $data['data'];
+$datuss=array();
+$tee=0;
 foreach ($data as $user){
+    $datuss[$tee]=$user['username'];
+    $tee++;
 	$out = shell_exec('bash /var/www/html/adduser '.$user['username'].' '.$user['password']);
+}
+//var_dump($data);
+
+
+foreach($userlist as $user){
+    $userarray = explode(":",$user);
+    if(!in_array($userarray[0], $datuss)){
+
+if (!empty($userarray[0])) {
+ $out = shell_exec('sh /var/www/html/delete '.$userarray[0]);
+ echo $userarray[0] . " Removed  <br>";
+}
+}
 }
 $postParameter = array(
     'method' => 'multisrvsync',
@@ -99,4 +113,8 @@ $curlResponse = curl_exec($curlHandle);
 curl_close($curlHandle);
 $data = json_decode($curlResponse, true);
 echo 'donme';
+$out = shell_exec("sudo killall -9 nethogs");
+sleep(2);
+$startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
+header("Refresh:1");
 ?>

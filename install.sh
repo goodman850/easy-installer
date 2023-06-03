@@ -31,7 +31,7 @@ wait
 sudo sed -i '/apache/d' /etc/sudoers & 
 wait
 
-sed -i 's@#Banner none@Banner /var/www/html/p/banner.txt@' /etc/ssh/sshd_config
+sed -i 's@#Banner none@Banner /var/www/html/NewPanel/banner.txt@' /etc/ssh/sshd_config
 sed -i 's@#PrintMotd yes@PrintMotd yes@' /etc/ssh/sshd_config
 sed -i 's@#PrintMotd no@PrintMotd yes@' /etc/ssh/sshd_config
 
@@ -114,7 +114,7 @@ echo 'www-data ALL=(ALL:ALL) NOPASSWD:/usr/sbin/iptables' | sudo EDITOR='tee -a'
 wait
 
 sudo service apache2 restart
-chown www-data:www-data /var/www/html/p/* &
+chown www-data:www-data /var/www/html/NewPanel/* &
 wait
 chown www-data:www-data /var/log/auth.log &
 wait
@@ -202,7 +202,7 @@ port=$(echo "$po" | sed "s/Port //g")
 systemctl restart httpd
 systemctl enable httpd
 systemctl restart sshd
-chown apache:apache /var/www/html/p/* &
+chown apache:apache /var/www/html/NewPanel/* &
 wait
 chown apache:apache /var/log/auth.log &
 wait
@@ -236,39 +236,39 @@ mysql -e "CREATE USER '${adminusername}'@'localhost' IDENTIFIED BY '${adminpassw
 wait
 mysql -e "GRANT ALL ON *.* TO '${adminusername}'@'localhost';" &
 wait
-sudo sed -i "s/22/$port/g" /var/www/html/p/config.php &
+sudo sed -i "s/22/$port/g" /var/www/html/NewPanel/config.php &
 wait 
-sudo sed -i "s/adminuser/$adminusername/g" /var/www/html/p/config.php &
+sudo sed -i "s/adminuser/$adminusername/g" /var/www/html/NewPanel/config.php &
 wait 
-sudo sed -i "s/adminpass/$adminpassword/g" /var/www/html/p/config.php &
+sudo sed -i "s/adminpass/$adminpassword/g" /var/www/html/NewPanel/config.php &
 wait 
 
-sudo sed -i "s/SERVERUSER/$adminusername/g" /var/www/html/p/killusers.sh &
+sudo sed -i "s/SERVERUSER/$adminusername/g" /var/www/html/NewPanel/killusers.sh &
 wait 
-sudo sed -i "s/SERVERPASSWORD/$adminpassword/g" /var/www/html/p/killusers.sh &
+sudo sed -i "s/SERVERPASSWORD/$adminpassword/g" /var/www/html/NewPanel/killusers.sh &
 wait 
-sudo sed -i "s/SERVERIP/$ipv4/g" /var/www/html/p/killusers.sh &
+sudo sed -i "s/SERVERIP/$ipv4/g" /var/www/html/NewPanel/killusers.sh &
 wait 
-php /var/www/html/p/restoretarikh.php
-php /var/www/html/p/versioncheck.php
-cp /var/www/html/p/tarikh /var/www/html/p/backup/tarikh
-rm -fr /var/www/html/p/tarikh
+php /var/www/html/NewPanel/restoretarikh.php
+php /var/www/html/NewPanel/versioncheck.php
+cp /var/www/html/NewPanel/tarikh /var/www/html/NewPanel/backup/tarikh
+rm -fr /var/www/html/NewPanel/tarikh
 rm -fr /var/www/html/update.zip
 
 
-crontab -l | grep -v '/p/expire.php'  | crontab  -
-crontab -l | grep -v '/p/posttraffic.php'  | crontab  -
-crontab -l | grep -v '/p/synctraffic.php'  | crontab  -
-crontab -l | grep -v 'p/killusers.sh'  | crontab  -
-(crontab -l ; echo "* * * * * php /var/www/html/p/expire.php >/dev/null 2>&1
-* * * * * php /var/www/html/p/posttraffic.php >/dev/null 2>&1
-* * * * * bash /var/www/html/p/killusers.sh >/dev/null 2>&1" ) | crontab - &
+crontab -l | grep -v '/NewPanel/expire.php'  | crontab  -
+crontab -l | grep -v '/NewPanel/posttraffic.php'  | crontab  -
+crontab -l | grep -v '/NewPanel/synctraffic.php'  | crontab  -
+crontab -l | grep -v '/NewPanel/killusers.sh'  | crontab  -
+(crontab -l ; echo "* * * * * php /var/www/html/NewPanel/expire.php >/dev/null 2>&1
+* * * * * php /var/www/html/NewPanel/posttraffic.php >/dev/null 2>&1
+* * * * * bash /var/www/html/NewPanel/killusers.sh >/dev/null 2>&1" ) | crontab - &
 wait
 
 
 clear
 printf "%s" "$(</var/www/html/TurboS.txt)"
-printf "\nPanel Link : http://${ipv4}/p/index.php"
+printf "\nPanel Link : http://${ipv4}/NewPanel/index.php"
 printf "\nUserName : \e[31m${adminusername}\e[0m "
 printf "\nPassword : \e[31m${adminpassword}\e[0m "
 printf "\nPort : \e[31m${port}\e[0m \n"
