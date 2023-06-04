@@ -1,8 +1,14 @@
 #!/bin/bash
 #By goodman850
-# Example : adduser test123 
+# Example : adduser hamed 123 
 
 sudo adduser -ingroup $1 $1  --shell /usr/sbin/nologin &
+wait
+sudo passwd $1 <<!
+$2
+$2
+!
+sudo adduser  $1  --shell /usr/sbin/nologin &
 wait
 
 sudo passwd $1 <<!

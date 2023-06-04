@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Tehran");
-$ip = "serverip";
-$token = "servertoken";
+$ip = "91.107.249.39";
+$token = "L0PBslMHBb8uFCL1";
 
 
 //include "config.php";
@@ -68,7 +68,7 @@ if (is_numeric($pid)) {
         }
     }
     //$oout= json_encode($newarray);
-var_dump($userlist1);
+
 } else {
     unlink("/var/www/html/p/log/out.json");
     $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
@@ -87,7 +87,11 @@ $data = json_decode($curlResponse, true);
 $data = $data['data'];
 $datuss=array();
 $tee=0;
+//var_dump($data);
 foreach ($data as $user){
+   // $out = shell_exec('sh /var/www/html/adduser '.$user['username'].' '.$user['password']);
+  //  echo $user['username'] ." added  <br>";
+
     $datuss[$tee]=$user['username'];
     $tee++;
     if(!array_search($user['username'], $userlist1)){
