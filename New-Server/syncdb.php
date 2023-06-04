@@ -4,9 +4,12 @@ $ip = "serverip";
 $token = "servertoken";
 
 
-include "config.php";
+//include "config.php";
 $output = shell_exec('cat /etc/passwd | grep "/home/" | grep -v "/home/syslog"');
 $userlist = preg_split("/\r\n|\n|\r/", $output);
+
+$output1 = shell_exec('cat /etc/passwd | cut -d: -f1');
+$userlist1 = preg_split("/\r\n|\n|\r/", $output1);
 
 $pid = shell_exec("pgrep nethogs");
 $pid = preg_replace("/\\s+/", "", $pid);
@@ -64,14 +67,14 @@ if (is_numeric($pid)) {
             }
         }
     }
-    $oout= json_encode($newarray);
-//var_dump($userlist);
+    //$oout= json_encode($newarray);
+var_dump($userlist1);
 } else {
     unlink("/var/www/html/p/log/out.json");
     $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
     header("Refresh:1");
 }
-
+//die();
 $postParameter = array(
     'method' => 'multiserver'
 );
@@ -87,9 +90,16 @@ $tee=0;
 foreach ($data as $user){
     $datuss[$tee]=$user['username'];
     $tee++;
-	$out = shell_exec('bash /var/www/html/adduser '.$user['username'].' '.$user['password']);
+    if(!array_search($user['username'], $userlist1)){
+
+        if (!empty($user['username'])) {
+         $out = shell_exec('sh /var/www/html/adduser '.$user['username'].' '.$user['password']);
+         echo $user['username'] ." added  <br>";
+        }
+        }
+	
 }
-//var_dump($data);
+//var_dump($datuss);
 
 
 foreach($userlist as $user){
@@ -116,5 +126,5 @@ echo 'donme';
 $out = shell_exec("sudo killall -9 nethogs");
 sleep(2);
 $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
-header("Refresh:1");
+//header("Refresh:1");
 ?>
