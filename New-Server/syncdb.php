@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Tehran");
-$ip = "91.107.249.39";
-$token = "L0PBslMHBb8uFCL1";
+$ip = "serverip";
+$token = "servertoken";
 
 
 //include "config.php";
