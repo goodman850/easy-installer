@@ -71,7 +71,7 @@ if (is_numeric($pid)) {
 
 } else {
     unlink("/var/www/html/p/log/out.json");
-    $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
+    $startnethogs = shell_exec("sudo nethogs -j -d 19-v 3 > /var/www/html/p/log/out.json &");
     header("Refresh:1");
 }
 //die();
@@ -132,6 +132,6 @@ $data = json_decode($curlResponse, true);
 echo 'donme';
 $out = shell_exec("sudo killall -9 nethogs");
 sleep(2);
-$startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
+$startnethogs = shell_exec("sudo nethogs -j -d 19 -v 3 > /var/www/html/p/log/out.json &");
 //header("Refresh:1");
 ?>
