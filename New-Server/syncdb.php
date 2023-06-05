@@ -3,7 +3,6 @@ date_default_timezone_set("Asia/Tehran");
 $ip = "serverip";
 $token = "servertoken";
 
-
 //include "config.php";
 $output = shell_exec('cat /etc/passwd | grep "/home/" | grep -v "/home/syslog"');
 $userlist = preg_split("/\r\n|\n|\r/", $output);
@@ -67,7 +66,7 @@ if (is_numeric($pid)) {
             }
         }
     }
-    //$oout= json_encode($newarray);
+    $oout= json_encode($newarray);
 
 } else {
     unlink("/var/www/html/p/log/out.json");
@@ -75,6 +74,8 @@ if (is_numeric($pid)) {
     header("Refresh:1");
 }
 //die();
+
+
 $postParameter = array(
     'method' => 'multiserver'
 );
@@ -87,7 +88,7 @@ $data = json_decode($curlResponse, true);
 $data = $data['data'];
 $datuss=array();
 $tee=0;
-//var_dump($data);
+
 foreach ($data as $user){
    // $out = shell_exec('sh /var/www/html/adduser '.$user['username'].' '.$user['password']);
   //  echo $user['username'] ." added  <br>";
@@ -126,8 +127,9 @@ curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
 $curlResponse = curl_exec($curlHandle);
 curl_close($curlHandle);
 $data = json_decode($curlResponse, true);
+//var_dump($data);
 echo 'donme';
-$out = shell_exec("sudo killall -9 nethogs");
+//$out = shell_exec("sudo killall -9 nethogs");
 sleep(2);
 $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
 //header("Refresh:1");
