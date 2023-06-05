@@ -1,7 +1,8 @@
 <?php
 date_default_timezone_set("Asia/Tehran");
-$ip = "serverip";
-$token = "servertoken";
+$ip = "91.107.249.39";
+$token = "L0PBslMHBb8uFCL1";
+
 
 //include "config.php";
 $output = shell_exec('cat /etc/passwd | grep "/home/" | grep -v "/home/syslog"');
@@ -20,8 +21,8 @@ if (is_numeric($pid)) {
     $json = json_decode($lastdata, true);
     $newarray = [];
     foreach ($json as $value) {
-        $TX = round($value["TX"], 0);
-        $RX = round($value["RX"], 0);
+        $TX =$value["TX"];
+        $RX = $value["RX"];
         $name = preg_replace("/\\s+/", "", $value["name"]);
         if (strpos($name, "sshd") === false) {
             $name = "";
@@ -129,7 +130,7 @@ curl_close($curlHandle);
 $data = json_decode($curlResponse, true);
 //var_dump($data);
 echo 'donme';
-//$out = shell_exec("sudo killall -9 nethogs");
+$out = shell_exec("sudo killall -9 nethogs");
 sleep(2);
 $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
 //header("Refresh:1");
