@@ -1,8 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Tehran");
-$ip = "91.107.249.39";
-$token = "L0PBslMHBb8uFCL1";
-
+$ip = "serverip";
+$token = "servertoken";
 
 //include "config.php";
 $output = shell_exec('cat /etc/passwd | grep "/home/" | grep -v "/home/syslog"');
@@ -56,9 +55,9 @@ if (is_numeric($pid)) {
         if (strpos($name, "@pts/1") !== false) {
             $name = "";
         }
-        if ($value["RX"] < 1 && $value["TX"] < 1) {
+        /*if ($value["RX"] < 1 && $value["TX"] < 1) {
             $name = "";
-        }
+        }*/
         $name = str_replace("sshd:", "", $name);
         if (!empty($name)) {
             if (isset($newarray[$name])) {
@@ -70,12 +69,33 @@ if (is_numeric($pid)) {
             }
         }
     }
+   // var_dump($newarray);
     $oout= json_encode($newarray);
+    $postParameter = array(
+        'method' => 'multisrvsync',
+        'datasyy'=> $oout
+        
+    );
+    
+    $curlHandle = curl_init('http://'.$ip.'/apiV1/api.php?token='.$token);
+    curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $postParameter);
+    curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+    $curlResponse = curl_exec($curlHandle);
+    curl_close($curlHandle);
+    $data = json_decode($curlResponse, true);
+    //var_dump($data);
+    var_dump($data);
+    echo 'donme';
+    $out = shell_exec("sudo killall -9 nethogs");
+    shell_exec("sudo rm -rf /var/www/html/p/log/out.json");
+    //sleep(2);
+    $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
 
 } else {
     
     unlink("/var/www/html/p/log/out.json");
-    $startnethogs = shell_exec("sudo nethogs -j -d 19 -v 3 > /var/www/html/p/log/out.json &");
+  
+    $startnethogs = shell_exec("sudo nethogs -j  -v 3 > /var/www/html/p/log/out.json &");
     header("Refresh:1");
 }
 //die();
@@ -160,26 +180,9 @@ curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
 $curlResponse = curl_exec($curlHandle);
 curl_close($curlHandle);
 $data = json_decode($curlResponse, true);
-//var_dump($data);
+var_dump($data);
 
 
-$postParameter = array(
-    'method' => 'multisrvsync',
-    'datasyy'=> $oout
-    
-);
 
-$curlHandle = curl_init('http://'.$ip.'/apiV1/api.php?token='.$token);
-curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $postParameter);
-curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
-$curlResponse = curl_exec($curlHandle);
-curl_close($curlHandle);
-$data = json_decode($curlResponse, true);
-//var_dump($data);
-//var_dump($data);
-echo 'donme';
-$out = shell_exec("sudo killall -9 nethogs");
-sleep(2);
-$startnethogs = shell_exec("sudo nethogs -j -d 19 -v 3 > /var/www/html/p/log/out.json &");
 //header("Refresh:1");
 ?>
