@@ -140,7 +140,7 @@ foreach($userlist as $user){
     $userarray = explode(":",$user);
     if(!in_array($userarray[0], $datuss)){
 
-if (!empty($userarray[0])) {
+if (!empty($userarray[0]) && $userarray[0] !='videocall') {
  $out = shell_exec('sh /var/www/html/delete '.$userarray[0]);
  echo $userarray[0] . " Removed  <br>";
 }
