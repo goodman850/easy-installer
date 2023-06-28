@@ -3,6 +3,8 @@ date_default_timezone_set("Asia/Tehran");
 $ip = "serverip";
 $token = "servertoken";
 
+
+
 //include "config.php";
 $output = shell_exec('cat /etc/passwd | grep "/home/" | grep -v "/home/syslog"');
 $userlist = preg_split("/\r\n|\n|\r/", $output);
