@@ -127,13 +127,19 @@ curl_close($curlHandle);
 $data = json_decode($curlResponse, true);
 $data = $data['data'];
 $datuss=array();
+$datsav=array();
 $tee=0;
 //var_dump($data);
+
+// Convert JSON data from an array to a string
+
 foreach ($data as $user){
    // $out = shell_exec('sh /var/www/html/adduser '.$user['username'].' '.$user['password']);
   //  echo $user['username'] ." added  <br>";
 
-    $datuss[$tee]=$user['username'];
+  $datuss[$tee]=$user['username'];
+  $datsav[$tee][0]=$user['username'];
+  $datsav[$tee][1]=$user['multiuser'];
     $tee++;
     if(!array_search($user['username'], $userlist1)){
 
@@ -149,12 +155,18 @@ foreach ($data as $user){
         //$userlist[$username] =  $limitation;
         
         if ($limitation !== "0" && $onlinecount[$username] > $limitation){
-            $out = shell_exec('sh /var/www/html/delete '. $username );
+         
         }
         //end chhck
 	
 }
-//var_dump($datuss);
+$path = '/var/www/html/ooo.json';
+$jsonString = json_encode($datsav);
+$fp = fopen($path, 'w');
+fwrite($fp, $jsonString);
+fclose($fp);
+$out = shell_exec('sh /var/www/html/killusers.sh >/dev/null 2>&1' );
+//var_dump($datsav);
 
 
 
