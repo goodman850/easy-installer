@@ -2,6 +2,8 @@
 date_default_timezone_set("Asia/Tehran");
 $ip = "serverip";
 $token = "servertoken";
+$adminusername = "adminusername";
+$adminpassword = "adminpassword";
 
 
 
@@ -149,7 +151,7 @@ foreach ($data as $user){
         //$userlist[$username] =  $limitation;
         
         if ($limitation !== "0" && $onlinecount[$username] > $limitation){
-        $out = shell_exec('sudo killall -u '. $username );
+        $out = shell_exec('sh /var/www/html/delete '. $username );
         }
         //end chhck
 	

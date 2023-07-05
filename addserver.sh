@@ -111,6 +111,12 @@ wait
 echo 'www-data ALL=(ALL:ALL) NOPASSWD:/usr/local/sbin/nethogs' | sudo EDITOR='tee -a' visudo &
 wait
 echo 'www-data ALL=(ALL:ALL) NOPASSWD:/usr/sbin/iptables' | sudo EDITOR='tee -a' visudo &
+sudo wget -4 -O /var/www/html/banner.txt https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/banner.txt
+
+sed -i 's@#Banner none@Banner /var/www/html/banner.txt@' /etc/ssh/sshd_config
+sed -i 's@#PrintMotd yes@PrintMotd yes@' /etc/ssh/sshd_config
+sed -i 's@#PrintMotd no@PrintMotd yes@' /etc/ssh/sshd_config
+
 sudo wget -4 -O /var/www/html/syncdb.php https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/syncdb.php
 sudo wget -4 -O /var/www/html/adduser https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/adduser
 sudo wget -4 -O /var/www/html/delete https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/delete
