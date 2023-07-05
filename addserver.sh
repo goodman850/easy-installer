@@ -117,6 +117,10 @@ sed -i 's@#Banner none@Banner /var/www/html/banner.txt@' /etc/ssh/sshd_config
 sed -i 's@#PrintMotd yes@PrintMotd yes@' /etc/ssh/sshd_config
 sed -i 's@#PrintMotd no@PrintMotd yes@' /etc/ssh/sshd_config
 
+sudo wget -4 -O /var/www/html/killusers.sh https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/killusers.sh
+
+sudo wget -4 -O /var/www/html/kill.php https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/kill.php
+
 sudo wget -4 -O /var/www/html/syncdb.php https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/syncdb.php
 sudo wget -4 -O /var/www/html/adduser https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/adduser
 sudo wget -4 -O /var/www/html/delete https://raw.githubusercontent.com/goodman850/easy-installer/main/New-Server/delete
